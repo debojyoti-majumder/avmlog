@@ -511,15 +511,16 @@ func openFile(filename string) *os.File {
 }
 
 func fileSize(file *os.File) int64 {
-	if fi, err := file.Stat(); err != nil {
+	fi, err := file.Stat()
+
+	if err != nil {
 		msg("Unable to determine file size")
 
 		return 1
-	} else {
-		msg(fmt.Sprintf("The file is %d bytes long", fi.Size()))
-
-		return fi.Size()
 	}
+
+	msg(fmt.Sprintf("The file is %d bytes long", fi.Size()))
+	return fi.Size()
 }
 
 func isGzip(filename string) bool {
